@@ -1,0 +1,151 @@
+add  把修改的文件添加到暂存区
+
+查看差异对比，看修改之前和修改之后的不同
+git diff
+git difftool --tool=vimdiff  直接vim打开两个直观比较不同
+git difftool --tool=meld  带界面，更直观
+
+git log 查看提交历史
+
+branch  分支管理
+git branch 分支名字  git branch abc
+git checkout abc  切换到abc分支
+git branch -D abc  删除abc分支
+git branch -l  查看当前所有的分支,前面有*是当前处于的分支
+
+checkout  代码回滚
+在git log里面commit后面有个版本号  复制那个版本号
+git checkout 版本号   就回滚过去了
+git checkout master
+
+
+reset 撤回，从暂存区撤回 撤销文件的暂存状态/代码的硬回滚
+git reset f2  把f2从暂存区撤回去
+
+对f2(未暂存)的文件修改进行撤销
+git checkout f2
+
+
+
+git init  创建一个新的空的git仓库,这个时候直接进入master分支,并且有一个.git文件，
+
+git status  看当前仓库的状态
+git add ./   添加到暂存区
+git commit -m ‘first commit'   把暂存区的东西提交到了本地仓库
+
+remote 调整与远程仓库对接的配置
+push  把本地仓库推送到远程仓库
+
+git remote add origin git@github.com:wyx123654/demo1.git   添加一个远端残酷并且远处仓库叫origin
+git push -u origin master    u：upstream --set-upstream  origin是远端仓库的名字 master是远端的master分支
+
+clone  把远程仓库克隆到本地
+git clone git@github.com:wyx123654/demo1.git
+
+pull 拉更新
+git pull   把远程仓库的更新拉取到本地
+
+status 查看当前仓库的状态
+git status
+
+merge  进行分支合并
+
+
+gitignore
+touch .gitignore  然后再去 viw .gitignore
+在gitignore里面， 写 .idea/  .venv/  *.sqlite3  *.log  __pycache__/
+这样 gitignore里写明的文件，在git add的时候就会忽略
+
+
+
+
+
+
+
+Git Flow
+    分支类型
+        master  主干分支，严格测试，可以随时上线
+        develop  开发分支，初步测试，比master更新的
+        feature  功能分支，代码最不稳定，开发完成后需要合并到develop分支
+
+
+
+
+                                     生产服务器
+                                       ^
+                                       |
+                                       |
+                                       | 2 服务重启
+        0.1     0.2     1.0     1.2 1.5| 1 代码发布到线上服务器
+master ---------------------------------------
+                                    ^ 4.合并
+                                    | 3.提交PR(pull request)，审核
+                                    | 2.测试人员测试
+                                    | 1.自动化测试
+develop --------------------*------*-------
+                     ^  5 审核没问题之后合并，如果有问题就重新审核
+                     |  4 其他开发者进行审核，
+                     |  3 创建 pull Request 让别人来审核代码
+                     |  2 把本地代码推送到远程like分支。
+like ----*-*-*-*-----   1 开发者自测没有问题
+follow ----------------
+
+
+一个功能一个分支，而不是一个人一个分支
+
+
+代码审核
+- 算法问题
+- 逻辑问题
+- 性能问题
+- 编码风格、规范问题  PEP8
+
+
+生产环境: 线上环境，正式服务器搭建的环境，给普通用户提供访问，运行master
+测试环境：测试服务器(2,3台)，供内部开发者和测试人员进行测试使用，运行develop或master
+开发环境：开发者自己的电脑环境，开发中的状态，运行feature /develop /master分支
+
+
+
+proj
+    proj
+        settings.py
+        urls.py
+        wsgi.py
+        other_config.py
+    common     不和具体某个模块挂钩，独立的东西
+        errors.py
+        keys.py
+        middleware.py
+    admin     统计一类的问题
+    app1
+        migrations
+        apps.py
+        logic.py
+        model.py
+        views.py (api.py)
+    app2
+        migrations
+        apps.py
+        logic.py   功能逻辑的地方写这里 连接model和view层
+        model.py
+        views.py
+    scripts    项目维护的脚本
+        xxx.py
+        yyy.sh
+    libs            跟数据库，缓存，第三方平台对接
+        cache.py
+        http.py
+        orm.py
+        sms.py(短信平台)
+    worker          异步任务或者耗时任务
+        __init__.py
+        config.py
+    manage.py
+
+# pycharm
+.idea/
+
+
+
+
