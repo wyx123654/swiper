@@ -80,7 +80,7 @@ DATABASES = {
         'NAME':'sh1904',
         'USER':'root',
         'PASSWORD':'wangyuxi',
-        'HOST':'10.11.70.214',
+        'HOST':'192.168.0.106',
         # http 80 https 443 mysql 3306 oracle 1521 mongodb 27012 tfp 21 ssh 22
         'PORT':3306
 
