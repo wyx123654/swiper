@@ -13,4 +13,19 @@ aaabbbcccddd
 
 ''.join(['aaa','bbb','ccc','ddd'])
 
+Linux 看进程
+ps -aux | grep apach2 | awk '{print $8}'
+
+资源拥有者
+ |
+ V
+第三方应用
+ | ^
+ V |
+资源存储方
+ | ^
+ V |
+资源拥有者 ->授权（允许）
+
+
 
