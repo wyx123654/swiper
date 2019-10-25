@@ -1,0 +1,13 @@
+编码/解码
+
+    base64（结尾一般带着等号）
+    urlencode,
+
+加密/解密
+
+    AES,RSA,TEA,HTTPS,
+
+哈希  -->单向，
+
+    md5,shasum
+
