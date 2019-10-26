@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect
 from user import logics
 from django.http import JsonResponse
@@ -7,6 +8,7 @@ from user.models import User
 from swiper import cfg
 from user.forms import UserForm, ProfileForm
 from libs.http import render_json
+from libs.qn_cloud import upload_to_qn
 
 # 获取短信验证码
 def get_vcode(request):
@@ -96,4 +98,12 @@ def set_profile(requset):
 
 def upload_avator(request):
     '''上传个人形象'''
-    return JsonResponse({})
+    avator = request.FILES.get('avator')
+
+    logics.handle_avator.delay(request.user,avator)
+
+
+    return JsonResponse()
+
+
+

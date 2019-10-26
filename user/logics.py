@@ -1,6 +1,9 @@
+import os
 import requests
 import random
 from django.core.cache import cache
+from tasks import celery_app
+from libs.qn_cloud import upload_to_qn
 from swiper import cfg
 from common import keys
 
@@ -55,6 +58,29 @@ def get_user_info(access_token,wb_uid):
         return user_info
     return None
 
+def save_upload_file(user,upload_avator):
+    '''保存上传的头像'''
+    filename = 'Avator-%s'%user.id  #文件名
+    filepath = '/tmp/%s'%filename  #文件路径
+    with open(filepath,'wb')as fp:
+        for chunk in upload_avator.chunks():
+            fp.write(chunk)
+    return filename,filepath
 
+@celery_app.task
+def handle_avator(user,upload_avator):
+    '''处理个人头像'''
+    # 文件保存到本地
+    filename, filepath = save_upload_file(user, upload_avator)
+
+    # 文件上传到七牛云
+    avator_url = upload_to_qn(filename, filepath)
+
+    # 保存 avator_url
+    user.avatar = avator_url
+    user.save()
+
+    # 删除本地临时文件
+    os.remove(filepath)
 
 
