@@ -1,0 +1,35 @@
+编码/解码
+
+    base64（结尾一般带着等号）
+    urlencode,
+
+加密/解密
+
+    AES,RSA,TEA,HTTPS,
+
+哈希  -->单向，
+
+    md5,shasum
+
+CDN   处理流媒体（视频，直播）
+北京  源站
+上海  镜像站
+长春  镜像站
+沈阳  镜像站
+
+__init__
+__new__
+__str__  返回一个字符串
+__repr__ 配合eval存在，反转成一个对象
+
+__iter__   for去操作
+__next__
+
+__enter__
+__exit__
+
+__gt__
+__lt__
+__eq__
+__ne__
+
