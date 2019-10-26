@@ -11,16 +11,19 @@ def rcmd(user):
     earliest_birthday = today -datetime.timedelta(profile.max_dating_age*365)
     # 最晚出生日期
     latest_birthday = today - datetime.timedelta(profile.min_dating_age*365)
+    # 取出滑过的用户的ID
+    sid_list = Swiped.objects.filter(uid = user.id).values_list('sid',filat = True)
     # 筛选出匹配的用户
     users = User.objects.filter(
         sex = profile.dating_sex,
         location = profile.dating_location,
         birthday__gte=earliest_birthday,
         birthday__lte=latest_birthday
-    )[:20]
+    ).exclude(id__in=sid_list)[:20]
     # ORM 对象关系映射
     # 有很多sql模板，通过模板产生sql语句，然后通过tcp连接，然后链接到mysql
     # TODO：排除滑过的用户
+
     return users
 
 def like_someone(user,sid):
