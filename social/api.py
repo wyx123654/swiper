@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from libs.http import render_json
 from social import logics
-
+from social.models import Swiped
 def ger_rcmd_users(request):
     '''获取推荐用户'''
     users = logics.rcmd(request.user)
@@ -10,7 +10,9 @@ def ger_rcmd_users(request):
 
 def like(request):
     '''右滑喜欢'''
-    return render_json()
+    sid = int(request.POST.get('sid'))
+    is_matched = logics.like_someone(request.user,sid)
+    return render_json({'matched':is_matched})
 def superlike(request):
     ''''上滑-超级喜欢'''
     return render_json()
