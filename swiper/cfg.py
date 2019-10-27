@@ -2,6 +2,15 @@
 程序逻辑配置和第三方平台配置
 '''
 from urllib.parse import urljoin,urlencode
+
+# REDIS的相关配置
+REDIS ={
+    'host':'10.11.70.101',
+    'post':6379,
+    'db':3
+}
+
+
 # 七牛云配置
 QN_ACCESS_KEY='KEM0sRR-meB92XU43_a6xZqhiyyTuu5yreGCbFtw'
 QN_SECRET_KEY='QxTKqgn0b_UVldphU261qu9IdzmjkgGHh6GQVPPy'

@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models import Q
 # Create your models here.
+# from common.stat import LogicErr,SwipeRepeatErr
+import stat
+
 class Swiped(models.Model):
     '''滑动记录'''
     STYPE=(
@@ -19,6 +22,21 @@ class Swiped(models.Model):
         condition =Q(stype = 'like')|Q(stype='superlike')
         return  clsc.objects.filter(uid = uid,sid=sid,stype=condition).exists()
 
+    @classmethod
+    def swipe(cls,uid,sid,stype):
+        '''执行一次滑动'''
+        # 检查stype是否正确
+        if stype not in ['like','superlike','dislike']:
+#             返回一个滑动类型错误
+            raise stat.SwipeTypeErr
+#         检查是否已经滑动过当前用户
+        if cls.objects.filter(uid = uid,sid = sid).exist():
+        #      返回一个重复滑动错误
+            raise stat.SwipeRepeatErr
+        return  cls.objects.create(uid=uid,sid=sid,stype=stype)
+    @classmethod
+    def who_liked_me(cls,uid):
+        return cls.objects.filter(sid = uid,stype__in=['like','superlike']).values_list('uid',flat=True)
 
 
 # 实例方法 所有普通的方法
@@ -35,6 +53,19 @@ class Friend(models.Model):
     def make_friends(clsc,uid,sid):
         '''创建好友关系'''
         uid1,uid2 = (sid,uid) if uid>sid else (uid,sid)
-        clsc.objects.create(uid1=uid1,uid2=uid2)
+        clsc.objects.geo_or_create(uid1=uid1,uid2=uid2)
+
+    @classmethod
+    def friend_ids(cls,uid):
+        '''查询所有好友的 ID'''
+        condition = Q(uid1 = uid)| Q(uid2 = uid)
+        friend_relations=cls.objects.filter(condition)
+        uid_list = []
+        for relation in friend_relations:
+            friend_id = relation.uid2 if relation.uid1 ==uid else relation.uid1
+            uid_list.append(friend_id)
+        return uid_list
+
+
 
 
