@@ -1,0 +1,39 @@
+tornado:异步非阻塞框架，性能好
+flask：轻量级框架，扩展性能好，插件非常丰富，定制性很好
+django：大而全的自备了很多的功能和模块，扩展性一般
+
+中间件
+    - aop  面向切面编程
+接收用户请求
+        |
+         ----------process_request
+        v
+进行路由匹配
+        |
+         ----------process_view
+        v
+view函数处理
+         ---------- process_template
+        |
+         ---------- process_exception
+        v
+返回响应
+        |
+         ---------- process_response
+        v
+浏览器
+
+
+队列
+    任务队列
+    消息队列
+栈
+    上一页
+
+生成器:惰性求值
+    def foo():
+        for i in range(10):
+            yield i
+    n = foo()   n就是一个生成器  节省内存
+
+
