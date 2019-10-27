@@ -32,7 +32,14 @@ def dislike(request):
     return render_json()
 
 def rewind(request):
-    '''反悔'''
+    '''
+    反悔
+    1  客户端传来的东西不可信，所有内容都需要验证
+    2  接口的参数和返回值保存吝啬原则，不要把无关的东西传回去
+    3  服务器能够直接获取的数据，不要由客户端传递
+    '''
+    logics.rewind_swipered(request.user)
+
     return render_json()
 def who_liked_me(request):
     '''谁喜欢我'''

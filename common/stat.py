@@ -25,3 +25,7 @@ def gen_logic_err(name, code):
 SwipeRepeatErr = gen_logic_err('SwipeRepeatErr', 1008)  # 重复滑动异常错误
 
 SwiperTypeErr = gen_logic_err('SwiperTypeErr', 1007)  # 滑动类型错误
+
+RewindLimit = gen_logic_err('RewindLimit',1009)  # 反悔达到上限
+
+RewindTimeout = gen_logic_err('RewindTimeout',1010)  # 反悔超时
