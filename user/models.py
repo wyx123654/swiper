@@ -1,5 +1,5 @@
 from django.db import models
-
+from vip.models import Vip
 
 class User(models.Model):
     SEX = (
@@ -24,6 +24,9 @@ class User(models.Model):
     avatar = models.CharField(max_length=256, verbose_name='个人形象')
     location = models.CharField(max_length=20, choices=LOCATION, verbose_name='常住地')
 
+    vip_id = models.IntegerField(default=1,verbose_name='用户对用的VIP')
+    vip_expired = models.DateTimeField(default='2000-1-1',verbose_name='会员过期时间')
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -41,6 +44,11 @@ class User(models.Model):
             self._profile,_ = Profile.objects.get_or_create(id=self.id)
         return self._profile
 
+    @property
+    def vip(self):
+        if not hasattr(self, '_vip'):
+            self._vip = Vip.objects.get(id=self.vip_id)
+        return self._vip
 
 class Profile(models.Model):
     # 交友资料

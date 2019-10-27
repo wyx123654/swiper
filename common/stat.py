@@ -29,3 +29,5 @@ SwiperTypeErr = gen_logic_err('SwiperTypeErr', 1007)  # 滑动类型错误
 RewindLimit = gen_logic_err('RewindLimit',1009)  # 反悔达到上限
 
 RewindTimeout = gen_logic_err('RewindTimeout',1010)  # 反悔超时
+
+PermissionLimit = gen_logic_err('PermissionLimit',1011)  # 用户没有相应的权限
