@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user',
+    'user','social'
 ]
 
 MIDDLEWARE = [
@@ -47,7 +47,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 #     自定义中间件
-    'common.middleware.AuthorizeMiddleware'
+    'common.middleware.AuthorizeMiddleware',
+    'common.middleware.LogicErrMiddleware'
 ]
 
 ROOT_URLCONF = 'swiper.urls'
@@ -82,7 +83,7 @@ DATABASES = {
         'NAME':'sh1904',
         'USER':'root',
         'PASSWORD':'wangyuxi',
-        'HOST':'192.168.0.106',
+        'HOST':'192.168.0.101',
         # http 80 https 443 mysql 3306 oracle 1521 mongodb 27012 tfp 21 ssh 22
         'PORT':3306
 

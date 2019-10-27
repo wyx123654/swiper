@@ -1,6 +1,5 @@
-from django.http import JsonResponse, request
 from django.utils.deprecation import MiddlewareMixin
-
+from libs.http import render_json
 from common import stat
 from user.models import User
 
@@ -24,6 +23,12 @@ class AuthorizeMiddleware(MiddlewareMixin):
         if not uid:
             return JsonResponse({'code':stat.LOGIN_REQUIRED,'data':None})
         request.user = User.objects.get(id=uid)
+
+class LogicErrMiddleware(MiddlewareMixin):
+    ''' 逻辑异常中间件'''
+    def process_exception(self,request,exception):
+        if isinstance(exception,stat.LogicErr):
+            return render_json(code=exception.code,data=exception.data)
 
 
 
